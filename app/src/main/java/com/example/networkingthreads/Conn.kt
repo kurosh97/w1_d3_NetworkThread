@@ -1,6 +1,7 @@
 package com.example.networkingthreads
 
 import android.os.Handler
+import android.util.Log
 import java.io.InputStream
 import java.lang.Exception
 import java.lang.StringBuilder
@@ -26,20 +27,19 @@ class Conn(
             val myConn = myUrl.openConnection() as HttpsURLConnection
             //3. get the input stream
             val istream: InputStream = myConn.inputStream
-
             //4. read the stream with reader
             val allText = istream.bufferedReader().use { it.readText() }
             val result = StringBuilder()
             result.append(allText)
             val str = result.toString()
-
+            Log.i("Viesti: ", str)
 
             val msg = myHandler.obtainMessage()
             msg.what = 0
             msg.obj = str
             myHandler.sendMessage(msg)
         } catch (e: Exception) {
-            e.printStackTrace()
+            Log.i("Error: ", e.toString())
         }
     }
 }
